@@ -2,7 +2,13 @@ import React from 'react';
 
 function App() {
   return (
-    <div className="App">Привет из React приложения</div>
+    <div
+      className="App"
+      style={{
+        color: 'red',
+        backgroundColor: "black"
+      }}
+    >Привет из React приложения!</div>
   );
 }
 
