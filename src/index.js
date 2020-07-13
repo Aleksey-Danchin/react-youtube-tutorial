@@ -1,41 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 // import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-function Welcome (props) {  
-  return (
-    <p>Hello {props.user.name} {props.user.surname}!</p>
-  )
+class Clock extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      title: "Текущее время",
+      date: new Date,
+      counter: 0
+    }
+
+    setInterval(() => {
+      this.setState((state, props) => ({
+        date: new Date,
+        counter: state.counter + 1
+      }))
+    }, 1000)
+  }
+
+  render () {
+    return (
+      <div>
+        <p>{this.state.title}</p>
+        <p>{this.state.counter}</p>
+        <p>{this.state.date.toLocaleTimeString()}</p>
+      </div>
+    )
+  }
 }
 
-// class Welcome extends React.Component {
-//   render () {
-//     return <p>Привет, {this.props.user.name} {this.props.user.surname}!</p>
-//   }
+// function Clock () {
+//   const [state, setState] = useState({
+//     title: "Текущее время",
+//     date: new Date
+//   })
+
+//   setInterval(() => setState({
+//     title: "Текущее время",
+//     date: new Date
+//   }))
+
+//   return (
+//     <div>
+//       <p>{state.title}</p>
+//       <p>{state.date.toLocaleTimeString()}</p>
+//     </div>
+//   )
 // }
 
-function App (props) {
-  const users = [
-    { name: "Алексей", surname: "Данчин" },
-    { name: "Серьгей", surname: "Окса" },
-    { name: "Дмитрий", surname: "Фигма" },
-  ]
-
-  return (
-    <div>
-      <Welcome user={users[0]} />
-      <Welcome user={users[1]} />
-      <Welcome user={users[2]} />
-    </div>
-  )
-}
 
 ReactDOM.render(
-  <App />,
+  <Clock />,
   document.querySelector('#root')
 )
-
 
 // ReactDOM.render(
 //   <React.StrictMode>
