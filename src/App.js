@@ -1,29 +1,41 @@
 import React from "react";
-import { useState } from "react";
-
-import Content from "./Content";
-import RecursiveButton from "./RecursiveButton";
 
 function App(props) {
-	const [showMode, setShowMode] = useState(true);
+	const users = [
+		{ id: 1, name: "Алексей", surname: "Данчин" },
+		{ id: 2, name: "Серьгей", surname: "Воронин" },
+		{ id: 3, name: "Татьяна", surname: "Митрофанова" },
+		{ id: 4, name: "Лариса", surname: "Баталина" },
+		{ id: 5, name: "Олег", surname: "Тинькофф" },
+	];
 
-	const handlerClick = () => {
-		setShowMode(!showMode);
+	const handlerMouseEnter = (user) => {
+		console.log(`${user.name} ${user.surname}`);
 	};
 
-	let content = null;
+	let lis = users.map((user, index) => {
+		const even = index % 2 === 0;
 
-	if (showMode) {
-		content = <Content />;
-	}
+		let style = {};
+		if (even) {
+			style = {
+				color: "white",
+				background: "black",
+			};
+		}
 
-	return (
-		<div>
-			<RecursiveButton />
-			{/* <button onClick={handlerClick}>Show toggle</button>
-			{content} */}
-		</div>
-	);
+		return (
+			<li
+				key={user.id}
+				style={style}
+				onMouseEnter={() => handlerMouseEnter(user)}
+			>
+				{user.name} {user.surname}
+			</li>
+		);
+	});
+
+	return <ul>{lis}</ul>;
 }
 
 export default App;
