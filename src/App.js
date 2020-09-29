@@ -1,27 +1,38 @@
 import React, { useState } from "react";
 
 function App() {
-	const [state, setState] = useState({
-		counter: 0,
-		user: {
-			name: "Алексей",
-			surname: "Данчин",
-		},
-	});
+	const [counter, setCounter] = useState(0);
 
-	console.log(state);
-
-	const handlerClick = (e) => {
-		setState({
-			...state,
-			counter: state.counter + 1,
-		});
+	const handlerClick = () => {
+		setCounter((x) => x + 1);
+		setCounter((x) => x + 1);
 	};
 
-	return (
-		<button onClick={handlerClick}>На меня нажали {state.counter} раз.</button>
-	);
+	return <button onClick={handlerClick}>На меня нажали {counter} раз.</button>;
 }
+
+// function App() {
+// 	const [state, setState] = useState({
+// 		counter: 0,
+// 		user: {
+// 			name: "Алексей",
+// 			surname: "Данчин",
+// 		},
+// 	});
+
+// 	console.log(state);
+
+// 	const handlerClick = (e) => {
+// 		setState({
+// 			...state,
+// 			counter: state.counter + 1,
+// 		});
+// 	};
+
+// 	return (
+// 		<button onClick={handlerClick}>На меня нажали {state.counter} раз.</button>
+// 	);
+// }
 
 // function App() {
 // 	const [counters, setCounters] = useState([0, 0, 0]);
