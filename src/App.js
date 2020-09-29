@@ -1,75 +1,43 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
-function App(props) {
-	const [value, setValue] = useState("Яблоко");
+import CitiesList from "./CitiesList";
+import City from "./City";
 
-	const handlerChange = (e) => {
-		setValue(e.target.value);
+function App() {
+	const [cities, setCities] = useState([
+		{ name: "Москва", description: "Столица России" },
+		{ name: "Зеленоград", description: "Научный спутник Москвы" },
+	]);
 
-		console.log(e.target.value);
+	const [currentIndex, setCurrentIndex] = useState(0);
+
+	const handlerChangeCity = (n, description) => {
+		setCities(
+			cities.map((city, index) => {
+				if (index === n) {
+					return {
+						...city,
+						description,
+					};
+				}
+
+				return city;
+			})
+		);
 	};
 
+	const handlerSelectCity = (n) => setCurrentIndex(n);
+
 	return (
-		<select value={value} onChange={handlerChange}>
-			<option value="Яблоко">Яблоко</option>
-			<option value="Банан">Банан</option>
-			<option value="Кокос">Кокос</option>
-			<option value="Виноград">Виноград</option>
-		</select>
+		<div>
+			<City
+				cities={cities}
+				onChangeCity={handlerChangeCity}
+				currentIndex={currentIndex}
+			/>
+			<CitiesList cities={cities} onSelectCity={handlerSelectCity} />
+		</div>
 	);
 }
-
-// function App(props) {
-// 	const [checked, setChecked] = useState(null);
-
-// 	const items = ["Яблоко", "Банан", "Кокос", "Виноград"];
-
-// 	return (
-// 		<ul>
-// 			{items.map((item) => (
-// 				<li key={item}>
-// 					<label>
-// 						<input
-// 							type="radio"
-// 							checked={checked === item}
-// 							onChange={() => setChecked(item)}
-// 						/>
-// 						{item}
-// 					</label>
-// 				</li>
-// 			))}
-// 		</ul>
-// 	);
-// }
-
-// class App extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-
-// 		this.state = {
-// 			value: "Текст",
-// 		};
-// 	}
-
-// 	handlerChange(event) {
-// 		this.setState({
-// 			value: event.target.value,
-// 		});
-// 	}
-
-// 	render() {
-// 		return (
-// 			<div>
-// 				{this.state.value}
-// 				<br />
-// 				<input
-// 					value={this.state.value}
-// 					onChange={(e) => this.handlerChange(e)}
-// 				/>
-// 			</div>
-// 		);
-// 	}
-// }
 
 export default App;
