@@ -1,56 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 
 function App() {
-	const [state, setState] = useState({
-		counter: 0,
-		user: {
-			name: "Алексей",
-			surname: "Данчин",
-		},
+	// componentDidMount componentDidUpdate
+	useEffect(() => {
+		console.log(document.querySelector("#target"));
 	});
 
-	console.log(state);
+	const [users, setUsers] = useState([]);
+	const [search, setSearch] = useState("");
 
-	const handlerClick = (e) => {
-		setState({
-			...state,
-			counter: state.counter + 1,
-		});
-	};
+	useEffect(() => {
+		fetch("/users?search=" + search)
+			.then((response) => response.json())
+			.then((users) => setUsers(users));
+	}, [search]);
 
-	return (
-		<button onClick={handlerClick}>На меня нажали {state.counter} раз.</button>
-	);
+	const [timer, setTimer] = useState(0);
+
+	useEffect(() => {
+		const flagInterval = setInterval(() => {
+			console.log("fired");
+			setTimer(timer + 1);
+		}, 1000);
+
+		return () => clearInterval(flagInterval);
+	});
+
+	return <p id="target">{timer}</p>;
 }
-
-// function App() {
-// 	const [counters, setCounters] = useState([0, 0, 0]);
-
-// 	const count = (n) => setCounters(counters.map((x, i) => x + (i === n)));
-
-// 	// const count = (n) => {
-// 	// 	setCounters(
-// 	// 		counters.map((v, i) => {
-// 	// 			if (n === i) {
-// 	// 				return v + 1;
-// 	// 			}
-
-// 	// 			return v;
-// 	// 		})
-// 	// 	);
-// 	// };
-
-// 	return (
-// 		<ul>
-// 			{[0, 1, 2].map((v) => (
-// 				<li key={v}>
-// 					<button onClick={() => count(v)}>
-// 						На меня нажали {counters[v]} раз.
-// 					</button>
-// 				</li>
-// 			))}
-// 		</ul>
-// 	);
-// }
 
 export default App;
