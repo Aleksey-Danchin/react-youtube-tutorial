@@ -1,24 +1,23 @@
-import React from "react";
-import { useCallback } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useReducer } from "react";
+
+import { increment, decrement } from "./actions";
+import reducer from "./reducer";
 
 function App() {
-	const [message, setMessage] = useState("Всем привет");
-	const [counter, setCounter] = useState(0);
-
-	const greeting = useCallback((text) => {
-		console.log(text);
-	}, []);
-
-	useEffect(() => {
-		greeting(message);
-	}, [greeting, message]);
+	const [state, dispatch] = useReducer(reducer, {
+		counter: 1,
+	});
 
 	return (
-		<button onClick={() => setCounter(counter + 1)}>
-			На меня нажали {counter} раз.
-		</button>
+		<div>
+			<button onClick={() => dispatch(decrement(2))}>-2</button>
+			<button onClick={() => dispatch(decrement(1))}>-1</button>
+
+			<span>{state.counter}</span>
+
+			<button onClick={() => dispatch(increment(1))}>+1</button>
+			<button onClick={() => dispatch(increment(2))}>+2</button>
+		</div>
 	);
 }
 
