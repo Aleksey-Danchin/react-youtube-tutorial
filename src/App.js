@@ -1,33 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useCallback } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 
 function App() {
-	// componentDidMount componentDidUpdate
-	useEffect(() => {
-		console.log(document.querySelector("#target"));
-	});
+	const [message, setMessage] = useState("Всем привет");
+	const [counter, setCounter] = useState(0);
 
-	const [users, setUsers] = useState([]);
-	const [search, setSearch] = useState("");
-
-	useEffect(() => {
-		fetch("/users?search=" + search)
-			.then((response) => response.json())
-			.then((users) => setUsers(users));
-	}, [search]);
-
-	const [timer, setTimer] = useState(0);
+	const greeting = useCallback((text) => {
+		console.log(text);
+	}, []);
 
 	useEffect(() => {
-		const flagInterval = setInterval(() => {
-			console.log("fired");
-			setTimer(timer + 1);
-		}, 1000);
+		greeting(message);
+	}, [greeting, message]);
 
-		return () => clearInterval(flagInterval);
-	});
-
-	return <p id="target">{timer}</p>;
+	return (
+		<button onClick={() => setCounter(counter + 1)}>
+			На меня нажали {counter} раз.
+		</button>
+	);
 }
 
 export default App;
