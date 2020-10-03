@@ -1,28 +1,43 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 
-import ActionsCard from "./ActionsCard";
-import StatusCard from "./StatusCard";
-import Context from "./Context";
+export default function App(props) {
+	const [name, setName] = useState("");
+	const [surname, setSurname] = useState("");
 
-function App() {
-	const [counter, setCounter] = useState(0);
+	const nameInputRef = useRef();
+	const surnameInputRef = useRef();
 
-	const count = (n) => setCounter(counter + n);
+	const handlerKeyUp1 = (e) => {
+		if (e.key === "Enter") {
+			surnameInputRef.current.focus();
+		}
+	};
 
-	const value = {
-		counter,
-		count,
+	const handlerKeyUp2 = (e) => {
+		if (e.key === "Enter") {
+			nameInputRef.current.focus();
+		}
 	};
 
 	return (
-		<Context.Provider value={value}>
-			<div className="container">
-				<StatusCard />
-				<ActionsCard />
-			</div>
-		</Context.Provider>
+		<form>
+			<input
+				ref={nameInputRef}
+				type="text"
+				placeholder="Имя"
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+				onKeyUp={handlerKeyUp1}
+			/>
+			<br />
+			<input
+				ref={surnameInputRef}
+				type="text"
+				placeholder="Фамилия"
+				value={surname}
+				onChange={(e) => setSurname(e.target.value)}
+				onKeyUp={handlerKeyUp2}
+			/>
+		</form>
 	);
 }
-
-export default App;
