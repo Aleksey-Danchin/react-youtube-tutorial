@@ -1,28 +1,35 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
-import ActionsCard from "./ActionsCard";
-import StatusCard from "./StatusCard";
-import Context from "./Context";
+import useOne from "./useOne";
+import useCounter from "./useCounter";
+import useSmartCounter from "./useSmartCounter";
 
 function App() {
-	const [counter, setCounter] = useState(0);
-
-	const count = (n) => setCounter(counter + n);
-
-	const value = {
-		counter,
-		count,
-	};
+	const { counter, add1, add5, remove1, remove5 } = useSmartCounter();
 
 	return (
-		<Context.Provider value={value}>
-			<div className="container">
-				<StatusCard />
-				<ActionsCard />
-			</div>
-		</Context.Provider>
+		<div>
+			<button onClick={add1}>+1</button>
+			<br />
+			<button onClick={add5}>+5</button>
+			<br />
+			<p>{counter}</p>
+			<br />
+			<button onClick={remove1}>-1</button>
+			<br />
+			<button onClick={remove5}>-5</button>
+		</div>
 	);
 }
+
+// function App() {
+// 	useOne(() => {
+// 		console.log("1 раз вызван.");
+// 	});
+
+// 	const { counter, count } = useCounter(100);
+
+// 	return <button onClick={count}>На меня нажали {counter} раз.</button>;
+// }
 
 export default App;
