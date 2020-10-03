@@ -1,23 +1,27 @@
-import React, { useReducer } from "react";
+import React from "react";
+import { useState } from "react";
 
-import { increment, decrement } from "./actions";
-import reducer from "./reducer";
+import ActionsCard from "./ActionsCard";
+import StatusCard from "./StatusCard";
+import Context from "./Context";
 
 function App() {
-	const [state, dispatch] = useReducer(reducer, {
-		counter: 1,
-	});
+	const [counter, setCounter] = useState(0);
+
+	const count = (n) => setCounter(counter + n);
+
+	const value = {
+		counter,
+		count,
+	};
 
 	return (
-		<div>
-			<button onClick={() => dispatch(decrement(2))}>-2</button>
-			<button onClick={() => dispatch(decrement(1))}>-1</button>
-
-			<span>{state.counter}</span>
-
-			<button onClick={() => dispatch(increment(1))}>+1</button>
-			<button onClick={() => dispatch(increment(2))}>+2</button>
-		</div>
+		<Context.Provider value={value}>
+			<div className="container">
+				<StatusCard />
+				<ActionsCard />
+			</div>
+		</Context.Provider>
 	);
 }
 
