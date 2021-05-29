@@ -1,24 +1,44 @@
-import UserCard from "./UserCard";
-
-const users = [
-	{ id: 1, name: "Алексей", surname: "Данчин" },
-	{ id: 2, name: "Сергей", surname: "Воронов" },
-	{ id: 3, name: "Олег", surname: "Дарков" },
-];
+import { useEffect, useRef } from "react";
+import { Table, TableBody, TableCell, TableHead, TableRow } from "./Components";
 
 function App(prop) {
+	const ref = useRef();
+
+	useEffect(() => {
+		console.log(ref.current);
+	}, []);
+
 	return (
-		<div>
-			<UserCard
-				user={users[0]}
-				onSendMessage={() => console.log(users[0])}
-			/>
-			<UserCard
-				user={users[1]}
-				onSendInvite={() => console.log(users[1])}
-			/>
-			<UserCard user={users[2]} />
-		</div>
+		<Table>
+			<TableHead>
+				<TableRow>
+					<TableCell ref={ref}>id</TableCell>
+					<TableCell>Имя</TableCell>
+					<TableCell>Фамилия</TableCell>
+				</TableRow>
+			</TableHead>
+			<TableBody>
+				<TableRow>
+					<TableCell>1</TableCell>
+					<TableCell onClick={() => console.log("Алексей")}>
+						Алексей
+					</TableCell>
+					<TableCell>Данчин</TableCell>
+				</TableRow>
+
+				<TableRow>
+					<TableCell>2</TableCell>
+					<TableCell>Сергей</TableCell>
+					<TableCell>Воронин</TableCell>
+				</TableRow>
+
+				<TableRow>
+					<TableCell>3</TableCell>
+					<TableCell>Дмитрий</TableCell>
+					<TableCell>Злов</TableCell>
+				</TableRow>
+			</TableBody>
+		</Table>
 	);
 }
 
