@@ -1,31 +1,19 @@
-import { useState } from "react";
+import "./styles.css";
 
-import { add, remove, doneToggle } from "./store/todo";
-import { useDispatch, useSelector } from "react-redux";
+import { Switch, Route } from "react-router-dom";
+import { UserPage, MainPage } from "./pages";
 
-const App = () => {
-  const items = useSelector((state) => state.todo);
-  const dispatch = useDispatch();
-
-  const [value, setValue] = useState("");
-
+export default function App() {
   return (
-    <div>
-      <input value={value} onChange={(e) => setValue(e.target.value)} />
-      <button onClick={() => dispatch(add(value))}>Добавить элемент</button>
-      <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-            <button onClick={() => dispatch(doneToggle(item.id))}>Done</button>
-            <button onClick={() => dispatch(remove(item.id))}>
-              Remove
-            </button>{" "}
-            <span className={item.done ? "done" : ""}>{item.content}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+    <Switch>
+      <Route exact path="/user/:userId" component={UserPage} />
 
-export default App;
+      <Route
+        path="*"
+        render={() => {
+          return <MainPage />;
+        }}
+      />
+    </Switch>
+  );
+}
