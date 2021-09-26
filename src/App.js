@@ -1,19 +1,28 @@
-import "./styles.css";
+import ButtonWithError from "./ButtonWithError";
+import ErrorBoundary from "./ErrorBoundary";
 
-import { Switch, Route } from "react-router-dom";
-import { UserPage, MainPage } from "./pages";
+const App = () => {
+	return (
+		<>
+			<ErrorBoundary
+				errorHandler={(error, errorInfo) => <p>{error.message}</p>}
+			>
+				<ButtonWithError title="Кнопка 1" />
+			</ErrorBoundary>
 
-export default function App() {
-  return (
-    <Switch>
-      <Route exact path="/user/:userId" component={UserPage} />
+			<ErrorBoundary
+				errorHandler={(error, errorInfo) => <p>{error.message}</p>}
+			>
+				<ButtonWithError title="Кнопка 2" />
+			</ErrorBoundary>
 
-      <Route
-        path="*"
-        render={() => {
-          return <MainPage />;
-        }}
-      />
-    </Switch>
-  );
-}
+			<ErrorBoundary
+				errorHandler={(error, errorInfo) => <p>{error.message}</p>}
+			>
+				<ButtonWithError title="Кнопка 3" />
+			</ErrorBoundary>
+		</>
+	);
+};
+
+export default App;
